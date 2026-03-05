@@ -20,6 +20,16 @@ export class EuroleagueController {
         }
     }
 
+    async getGameByCode(req: Request, res: Response) {
+        try {
+            const { seasonCode, gameCode } = req.params as { seasonCode: string, gameCode: string };
+            const game = await euroleagueService.getGame(seasonCode, gameCode);
+            res.json(game);
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
     async getRounds(req: Request, res: Response) {
         try {
             const { seasonCode } = req.params;

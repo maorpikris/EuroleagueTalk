@@ -168,7 +168,7 @@ const GameCenter: React.FC = () => {
                                 </Typography>
                                 <Box>
                                     {dateGames.map((game) => (
-                                        <GameRow key={game.id} game={game} />
+                                        <GameRow key={game.id} game={game} seasonCode={selectedSeason} />
                                     ))}
                                 </Box>
                             </Box>

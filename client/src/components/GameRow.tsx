@@ -1,14 +1,14 @@
-import React from 'react';
 import type { Game } from '../types/euroleague';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardActionArea, Stack, Typography, Box, Avatar, Button } from '@mui/material';
 import { ChevronRight } from 'lucide-react';
 
-interface Props {
+export interface GameRowProps {
     game: Game;
+    seasonCode: string;
 }
 
-const GameRow: React.FC<Props> = ({ game }) => {
+const GameRow = ({ game, seasonCode }: GameRowProps) => {
     const navigate = useNavigate();
     const isFinished = game.status === 'result';
     const startTime = new Date(game.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
@@ -18,7 +18,7 @@ const GameRow: React.FC<Props> = ({ game }) => {
 
     return (
         <Card sx={{ mb: 2 }}>
-            <CardActionArea onClick={() => navigate(`/game/${game.code}`)} sx={{ p: 3 }}>
+            <CardActionArea onClick={() => navigate(`/game/${seasonCode}/${game.code}`)} sx={{ p: 3 }}>
                 <Stack direction="row" alignItems="center" spacing={4}>
                     <Box sx={{ width: 200 }}>
                         <Typography variant="h6" fontWeight={800}>{startTime}</Typography>

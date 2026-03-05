@@ -6,6 +6,7 @@ const euroleagueController = new EuroleagueController();
 
 router.get('/seasons', euroleagueController.getSeasons);
 router.get('/seasons/:seasonCode/games', euroleagueController.getGames);
+router.get('/seasons/:seasonCode/games/:gameCode', euroleagueController.getGameByCode);
 router.get('/seasons/:seasonCode/rounds', euroleagueController.getRounds);
 router.get('/seasons/:seasonCode/clubs', euroleagueController.getClubs);
 
