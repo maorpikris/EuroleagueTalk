@@ -4,7 +4,6 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { login as loginApi, googleAuth as googleAuthApi } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 import { GoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode';
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -32,14 +31,10 @@ const Login: React.FC = () => {
 
     const handleGoogleSuccess = async (credentialResponse: any) => {
         try {
-            const decoded: any = jwtDecode(credentialResponse.credential);
             const data = await googleAuthApi({
-                googleId: decoded.sub,
-                username: decoded.name,
-                email: decoded.email,
-                avatarUrl: decoded.picture
+                idToken: credentialResponse.credential
             });
-            login(data.user, data.tokens.accessToken, data.tokens.refreshToken);
+            login(data.user, data.accessToken, data.refreshToken);
             navigate('/game-center');
         } catch (err) {
             setError('Google login failed');

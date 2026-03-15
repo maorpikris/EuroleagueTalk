@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model';
+import { OAuth2Client } from 'google-auth-library';
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const generateTokens = (user: any) => {
     const accessToken = jwt.sign(
@@ -104,10 +107,23 @@ export const logout = async (req: Request, res: Response) => {
 };
 
 export const googleAuth = async (req: Request, res: Response) => {
-    // This is a placeholder for Google OAuth implementation
-    // In a real app, you'd verify the Google id_token sent from the frontend
     try {
-        const { googleId, username, email, avatarUrl } = req.body;
+        const { idToken } = req.body;
+        if (!idToken) {
+            return res.status(400).json({ error: 'Google ID Token is required' });
+        }
+
+        const ticket = await client.verifyIdToken({
+            idToken,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+
+        const payload = ticket.getPayload();
+        if (!payload) {
+            return res.status(401).json({ error: 'Invalid Google token' });
+        }
+
+        const { sub: googleId, name: username, email, picture: avatarUrl } = payload;
         let user = await User.findOne({ googleId });
 
         if (!user) {
@@ -133,9 +149,11 @@ export const googleAuth = async (req: Request, res: Response) => {
 
         res.json({
             user: { id: user._id, username: user.username, email: user.email, avatarUrl: user.avatarUrl },
-            tokens
+            accessToken: tokens.accessToken,
+            refreshToken: tokens.refreshToken
         });
     } catch (error: any) {
+        console.error('Google Auth error:', error);
         res.status(500).json({ error: error.message });
     }
 };
