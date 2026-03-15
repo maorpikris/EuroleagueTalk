@@ -22,7 +22,7 @@ const PostCard = ({ post, onDelete, onUpdate }: Props) => {
     const [editText, setEditText] = useState(post.text);
 
     const isLiked = user ? likes.includes(user.id) : false;
-    const isOwner = user?.id === post.author._id;
+    const isOwner = user?.id === post.author?._id;
 
     const handleLike = async () => {
         if (!user) return;
@@ -58,12 +58,12 @@ const PostCard = ({ post, onDelete, onUpdate }: Props) => {
         <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 4, border: '1px solid #e0e0e0' }}>
             <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>
                 <Avatar
-                    src={post.author.avatarUrl?.startsWith('/') ? `${serverUrl}${post.author.avatarUrl}` : post.author.avatarUrl}
-                    alt={post.author.username}
+                    src={post.author?.avatarUrl?.startsWith('/') ? `${serverUrl}${post.author.avatarUrl}` : post.author?.avatarUrl}
+                    alt={post.author?.username || 'Unknown'}
                 />
                 <Box sx={{ flex: 1 }}>
                     <Typography variant="subtitle1" fontWeight={700}>
-                        {post.author.username}
+                        {post.author?.username || 'Deleted User'}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
                         {new Date(post.createdAt).toLocaleDateString()} {new Date(post.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
