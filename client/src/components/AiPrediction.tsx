@@ -154,7 +154,52 @@ const AiPrediction: React.FC<AiPredictionProps> = ({
     }
 
     if (error || !data) {
-        return null;
+        return (
+            <Paper elevation={0} sx={{
+                p: 4,
+                mb: 6,
+                borderRadius: 6,
+                border: '1px solid rgba(0, 0, 0, 0.05)',
+                background: '#f9fafb',
+                position: 'relative',
+                overflow: 'hidden',
+                textAlign: 'center'
+            }}>
+                <Box sx={{
+                    position: 'absolute',
+                    top: -20,
+                    left: -20,
+                    width: 100,
+                    height: 100,
+                    borderRadius: '50%',
+                    background: 'rgba(0, 0, 0, 0.02)',
+                    filter: 'blur(40px)'
+                }} />
+
+                <Stack spacing={2} alignItems="center">
+                    <Box sx={{
+                        p: 2,
+                        borderRadius: '50%',
+                        bgcolor: 'background.paper',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <Sparkles size={24} color="#9ca3af" />
+                    </Box>
+
+                    <Box>
+                        <Typography variant="h6" fontWeight={800} color="text.primary" gutterBottom>
+                            AI Insights Temporarily Offline
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 400, mx: 'auto', opacity: 0.8 }}>
+                            Our Euroleague oracle is currently meditating. Please check back in a few minutes for fresh match analytics.
+                        </Typography>
+                    </Box>
+                </Stack>
+            </Paper>
+        );
     }
 
     return (
