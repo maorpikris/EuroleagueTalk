@@ -21,16 +21,17 @@ export class AiService {
             You are a Euroleague basketball expert. Analyze the following match-up:
             Home Team: ${game.home.name}
             Away Team: ${game.away.name}
-            Round: ${game.roundNumber}
-            
             Provide:
             1. A short prediction (1-2 sentences) for the match.
             2. Three key focus points for ${game.home.name} to win.
             3. Three key focus points for ${game.away.name} to win.
+            4. A predicted final score: provide exactly two integers, one for ${game.home.name} and one for ${game.away.name}.
             
             Format your response as a JSON object:
             {
                 "prediction": "string",
+                "homeScore": number,
+                "awayScore": number,
                 "homeTeamFocus": ["string", "string", "string"],
                 "awayTeamFocus": ["string", "string", "string"]
             }

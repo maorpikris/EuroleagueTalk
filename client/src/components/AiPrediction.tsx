@@ -6,6 +6,8 @@ import Typewriter from './Typewriter';
 
 interface AiPredictionData {
     prediction: string;
+    homeScore: number;
+    awayScore: number;
     homeTeamFocus: string[];
     awayTeamFocus: string[];
 }
@@ -176,11 +178,74 @@ const AiPrediction: React.FC<AiPredictionProps> = ({
                 filter: 'blur(40px)'
             }} />
 
-            <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
-                <Sparkles size={20} color="#8b5cf6" />
-                <Typography variant="overline" sx={{ fontWeight: 800, color: '#8b5cf6', letterSpacing: 1.5 }}>
-                    AI Match Preview
-                </Typography>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
+                <Stack direction="row" spacing={1} alignItems="center">
+                    <Sparkles size={20} color="#8b5cf6" />
+                    <Typography variant="overline" sx={{ fontWeight: 800, color: '#8b5cf6', letterSpacing: 1.5 }}>
+                        AI Match Preview
+                    </Typography>
+                </Stack>
+                {(data.homeScore !== undefined && data.awayScore !== undefined) && (
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <Typography variant="caption" sx={{
+                            fontWeight: 800,
+                            color: 'text.secondary',
+                            opacity: 0.6,
+                            letterSpacing: 1,
+                            display: { xs: 'none', sm: 'block' }
+                        }}>
+                            PREDICTED SCORE
+                        </Typography>
+                        <Box sx={{
+                            background: 'linear-gradient(45deg, #8b5cf6, #d946ef)',
+                            pl: 1,
+                            pr: 1,
+                            py: 0.5,
+                            borderRadius: 10,
+                            color: 'white',
+                            fontWeight: 900,
+                            fontSize: '1.1rem',
+                            boxShadow: '0 4px 15px rgba(139, 92, 246, 0.4)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1.5
+                        }}>
+                            <Box sx={{
+                                width: 28,
+                                height: 28,
+                                borderRadius: '50%',
+                                bgcolor: 'white',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                p: 0.5,
+                                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                            }}>
+                                <img src={homeTeamImage} alt={homeTeamName} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                            </Box>
+
+                            <Stack direction="row" spacing={1} alignItems="center">
+                                <Typewriter text={`${data.homeScore}`} wordIntervalMs={50} />
+                                <Typography sx={{ opacity: 0.6, fontSize: '0.8rem', fontWeight: 700 }}>:</Typography>
+                                <Typewriter text={`${data.awayScore}`} wordIntervalMs={50} />
+                            </Stack>
+
+                            <Box sx={{
+                                width: 28,
+                                height: 28,
+                                borderRadius: '50%',
+                                bgcolor: 'white',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                p: 0.5,
+                                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                            }}>
+                                <img src={awayTeamImage} alt={awayTeamName} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                            </Box>
+                        </Box>
+                    </Box>
+                )}
             </Stack>
 
             <Typography variant="h6" fontWeight={700} sx={{ mb: 3, lineHeight: 1.4, minHeight: '3em' }}>
