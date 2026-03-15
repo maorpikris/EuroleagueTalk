@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import { EuroleagueService } from '../services/euroleague.service';
+import { AiService } from '../services/ai.service';
 
 const euroleagueService = new EuroleagueService();
+const aiService = new AiService();
 
 export class EuroleagueController {
     async getGames(req: Request, res: Response) {
@@ -56,6 +58,23 @@ export class EuroleagueController {
             const clubs = await euroleagueService.getClubs(seasonCode as string);
             res.json(clubs);
         } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    async getGameAiPrediction(req: Request, res: Response) {
+        try {
+            const { seasonCode, gameCode } = req.params as { seasonCode: string, gameCode: string };
+            const gameResponse = await euroleagueService.getGame(seasonCode, gameCode);
+
+            if (gameResponse.data.status === 'result') {
+                return res.status(400).json({ error: 'AI predictions are not available for finished games.' });
+            }
+
+            const insights = await aiService.getMatchInsights(gameResponse.data);
+            res.json(insights);
+        } catch (error: any) {
+            console.error('AI prediction error:', error);
             res.status(500).json({ error: error.message });
         }
     }

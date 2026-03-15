@@ -9,5 +9,6 @@ router.get('/seasons/:seasonCode/games', euroleagueController.getGames);
 router.get('/seasons/:seasonCode/games/:gameCode', euroleagueController.getGameByCode);
 router.get('/seasons/:seasonCode/rounds', euroleagueController.getRounds);
 router.get('/seasons/:seasonCode/clubs', euroleagueController.getClubs);
+router.get('/seasons/:seasonCode/games/:gameCode/ai-prediction', euroleagueController.getGameAiPrediction);
 
 export default router;

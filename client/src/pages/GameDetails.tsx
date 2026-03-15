@@ -7,6 +7,7 @@ import type { Game } from '../types/euroleague';
 import type { Post as PostType } from '../types/social';
 import CreatePost from '../components/CreatePost';
 import PostCard from '../components/PostCard';
+import AiPrediction from '../components/AiPrediction';
 import { useAuth } from '../contexts/AuthContext';
 
 const GameDetails: React.FC = () => {
@@ -131,6 +132,19 @@ const GameDetails: React.FC = () => {
                 </Box>
             ) : (
                 <Alert severity="error">Game not found.</Alert>
+            )}
+
+            {game && game.status !== 'result' && gameId && seasonCode && (
+                <Box sx={{ mt: 6 }}>
+                    <AiPrediction
+                        seasonCode={seasonCode}
+                        gameCode={gameId}
+                        homeTeamName={game.home.name}
+                        awayTeamName={game.away.name}
+                        homeTeamImage={game.home.imageUrls.crest}
+                        awayTeamImage={game.away.imageUrls.crest}
+                    />
+                </Box>
             )}
 
             <Divider sx={{ my: 6 }} />

@@ -1,14 +1,14 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import euroleagueRoutes from './routes/euroleague.routes';
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 import socialRoutes from './routes/social.routes';
 import path from 'path';
-
-dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;

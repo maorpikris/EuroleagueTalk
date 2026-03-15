@@ -63,6 +63,11 @@ export const getGameDetails = async (seasonCode: string, gameCode: string) => {
     return response.data;
 };
 
+export const getGameAiPrediction = async (seasonCode: string, gameCode: string) => {
+    const response = await api.get(`/seasons/${seasonCode}/games/${gameCode}/ai-prediction`);
+    return response.data;
+};
+
 export const getClubs = async (seasonCode: string) => {
     const response = await api.get(`/seasons/${seasonCode}/clubs`);
     return response.data;
