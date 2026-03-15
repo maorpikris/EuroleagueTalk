@@ -8,7 +8,7 @@ export class AiService {
     constructor() {
         const apiKey = process.env.GEMINI_API_KEY || '';
         this.genAI = new GoogleGenerativeAI(apiKey);
-        this.model = this.genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
+        this.model = this.genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite-preview' });
     }
 
     async getMatchInsights(game: Game) {
