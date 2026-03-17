@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: euroleague-backend-prod
+    restart: always
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb:/user:1234@localhost:21771/euroleaguetalk
+      - JWT_SECRET=${JWT_SECRET:-your_jwt_secret_key_change_this_for_production}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET:-your_jwt_refresh_secret_key_change_this_for_production}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-638504767686-deh73nuroupkntgnld8401kkmklptj8s.apps.googleusercontent.com}
+      - EUROLEAGUE_API_BASE_URL=https://feeds.incrowdsports.com/provider/euroleague-feeds/v2
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-AIzaSyBYsNjkuT6JNwhKTBJySk9iW3GJTzQ18O0}
+    networks:
+      - euroleague-network
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=/api
+        - VITE_SERVER_URL=/
+        - VITE_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-638504767686-deh73nuroupkntgnld8401kkmklptj8s.apps.googleusercontent.com}
+    container_name: euroleague-frontend-prod
+    restart: always
+    ports:
+      - "127.0.0.1:5173:5173"
+    networks:
+      - euroleague-network
+
+networks:
+  euroleague-network:
+    driver: bridge
