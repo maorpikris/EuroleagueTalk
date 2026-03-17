@@ -69,7 +69,7 @@ describe('Social Routes', () => {
                     gameId: 'game1',
                     seasonCode: 'season1',
                     text: 'Hello world',
-                    imageUrl: '/uploads/posts/test-image.png',
+                    imageUrl: '/api/uploads/posts/test-image.png',
                     save: jest.fn().mockResolvedValue(true),
                     populate: jest.fn().mockResolvedValue(true)
                 };

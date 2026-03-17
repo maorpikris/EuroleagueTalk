@@ -32,14 +32,13 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
         }
 
         if (req.file) {
-            // Delete old avatar if it exists and is local
-            if (user.avatarUrl && user.avatarUrl.startsWith('/uploads/profiles/')) {
+            if (user.avatarUrl && user.avatarUrl.startsWith('/api/uploads/profiles/')) {
                 const oldAvatarPath = path.join(process.cwd(), user.avatarUrl.substring(1));
                 if (fs.existsSync(oldAvatarPath)) {
                     fs.unlinkSync(oldAvatarPath);
                 }
             }
-            user.avatarUrl = `/uploads/profiles/${req.file.filename}`;
+            user.avatarUrl = `/api/uploads/profiles/${req.file.filename}`;
         }
 
         await user.save();

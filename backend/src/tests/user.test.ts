@@ -40,7 +40,7 @@ describe('User Routes', () => {
                 _id: 'mockUserId123',
                 username: 'testUser',
                 email: 'test@example.com',
-                avatarUrl: '/uploads/profiles/test-avatar.png'
+                avatarUrl: '/api/uploads/profiles/test-avatar.png'
             };
 
             (User.findById as jest.Mock).mockReturnValue({
@@ -54,7 +54,7 @@ describe('User Routes', () => {
                 id: 'mockUserId123',
                 username: 'testUser',
                 email: 'test@example.com',
-                avatarUrl: '/uploads/profiles/test-avatar.png'
+                avatarUrl: '/api/uploads/profiles/test-avatar.png'
             });
             expect(User.findById).toHaveBeenCalledWith('mockUserId123');
         });
@@ -106,7 +106,7 @@ describe('User Routes', () => {
             const mockUser = {
                 _id: 'mockUserId123',
                 username: 'oldUsername',
-                avatarUrl: '/uploads/profiles/old.png',
+                avatarUrl: '/api/uploads/profiles/old.png',
                 save: jest.fn().mockResolvedValue(true)
             };
 
@@ -119,7 +119,7 @@ describe('User Routes', () => {
                 .send({ mockFile: true }); // triggers our mocked upload middleware
 
             expect(response.status).toBe(200);
-            expect(mockUser.avatarUrl).toBe('/uploads/profiles/test-avatar.png');
+            expect(mockUser.avatarUrl).toBe('/api/uploads/profiles/test-avatar.png');
             expect(mockUser.save).toHaveBeenCalled();
         });
 

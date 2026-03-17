@@ -13,7 +13,7 @@ export class PostController {
                 return res.status(401).json({ error: 'Unauthorized' });
             }
 
-            const imageUrl = req.file ? `/uploads/posts/${req.file.filename}` : undefined;
+            const imageUrl = req.file ? `/api/uploads/posts/${req.file.filename}` : undefined;
 
             const post = new Post({
                 author,
