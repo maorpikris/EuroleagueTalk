@@ -14,7 +14,7 @@ const Profile: React.FC = () => {
     const [loadingPosts, setLoadingPosts] = useState(true);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const serverUrl = import.meta.env.VITE_SERVER_URL || 'http://localhost:3000';
+    const serverUrl = (import.meta.env.VITE_SERVER_URL || 'http://localhost:3000').replace(/\/$/, '');
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
     const [avatarPreview, setAvatarPreview] = useState('');
 

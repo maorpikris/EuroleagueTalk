@@ -11,7 +11,7 @@ interface Props {
 
 const CommentSection = ({ postId }: Props) => {
     const { user } = useAuth();
-    const serverUrl = import.meta.env.VITE_SERVER_URL || 'http://localhost:3000';
+    const serverUrl = (import.meta.env.VITE_SERVER_URL || 'http://localhost:3000').replace(/\/$/, '');
     const [comments, setComments] = useState<Comment[]>([]);
     const [loading, setLoading] = useState(true);
     const [newComment, setNewComment] = useState('');

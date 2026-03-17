@@ -14,7 +14,7 @@ interface Props {
 
 const PostCard = ({ post, onDelete, onUpdate }: Props) => {
     const { user } = useAuth();
-    const serverUrl = import.meta.env.VITE_SERVER_URL || 'http://localhost:3000';
+    const serverUrl = (import.meta.env.VITE_SERVER_URL || 'http://localhost:3000').replace(/\/$/, '');
     const [likes, setLikes] = useState<string[]>(post.likes);
     const [showComments, setShowComments] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

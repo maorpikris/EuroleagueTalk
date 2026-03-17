@@ -7,7 +7,7 @@ import { logout as logoutApi } from '../services/api';
 const Header: React.FC = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
-    const serverUrl = import.meta.env.VITE_SERVER_URL || 'http://localhost:3000';
+    const serverUrl = (import.meta.env.VITE_SERVER_URL || 'http://localhost:3000').replace(/\/$/, '');
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
